@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--Derek Kronemeyer-->
+<!--CMPT 250-->
+<!--Lab 2 with Functions-->
+<!--Find the bean-->
+<!--October 15, 2018-->
+<html>
+<head>
+	<title> Find The Bean with a Function </title>
+
+	<script type="text/javascript">
+
+		// Declare global variables.
+		var beanCupNumber = 1; // Gets changed later.
+		var stillPlaying = true; // false if the game is over.
+
+		// Picks a random cup to hide the bean
+		function randomCup()
+		{
+			//beanCupNumber is a global variable
+			beanCupNumber = Math.floor(Math.random()*3) + 1;
+			document.getElementById('beanCupNumberWatcher').innerHTML = beanCupNumber;//comment out this line to get rid of cheat
+		}
+		
+		//checks if specified cup has bean and shows it if it does
+		function mouseOnFunction(cupSelected, cupID)
+		{
+			if(cupSelected == beanCupNumber)
+				document.getElementById(cupID).src = "bean.png";
+			else
+				document.getElementById(cupID).src = "x.png";
+		}
+		
+		//if specified button is correct ends game
+		function buttonFunction(buttonNumber)
+		{
+			if(buttonNumber == beanCupNumber)
+			{
+				stillPlaying = false; //used to lock pictures once game is over
+				document.getElementById('message').innerHTML = 'Right!';
+				document.getElementById('cup1').src = "thumb.png";
+				document.getElementById('cup2').src = "thumb.png";
+				document.getElementById('cup3').src = "thumb.png";
+			}
+			else
+			{
+				document.getElementById('message').innerHTML = 'Wrong!';
+			}
+		}
+		
+		//resets game to play again
+		function resetFunction()
+		{
+			stillPlaying = true;
+			document.getElementById('cup1').src = "cup.png";
+			document.getElementById('cup2').src = "cup.png";
+			document.getElementById('cup3').src = "cup.png";
+			randomCup();
+			document.getElementById('message').innerHTML = 'Choose a bean';
+		}
+		
+	</script>
+</head>
+
+<body onload="randomCup();">
+	<table style="width:100%;text-align:center;" border="0">
+		<tr>	
+			<td width="200"> <!--First Cup--> 
+				<img src="cup.png" 
+				onmouseover="if(stillPlaying)mouseOnFunction(1, 'cup1');"
+				onmouseout="if(stillPlaying)this.src='cup.png';"
+				height = "300"
+				id="cup1">
+			</td>
+			<td width="200" height="300"> <!--Second Cup-->
+				<img src="cup.png" 
+				onmouseover="if(stillPlaying)mouseOnFunction(2, 'cup2');"
+				onmouseout="if(stillPlaying)this.src='cup.png';"
+				height = "300"
+				id="cup2">	
+			</td>
+			<td width="200" height="300"> <!--Third Cup-->
+				<img src="cup.png" 
+				onmouseover="if(stillPlaying)mouseOnFunction(3, 'cup3');"
+				onmouseout="if(stillPlaying)this.src='cup.png';"
+				height = "300"
+				id="cup3">
+			</td>
+		</tr>
+		<tr>
+			<td> <!--First Button-->
+				<button 
+					type="button" 
+					onclick="buttonFunction(1);">
+						Choose Cup 1
+				</button>		
+			</td>
+			<td> <!--Second Button-->
+				<button 
+					type="button" 
+					onclick="buttonFunction(2);">
+						Choose Cup 2
+				</button>		
+			</td>
+			<td> <!--Third Button-->
+				<button 
+					type="button" 
+					onclick="buttonFunction(3)";>
+						Choose Cup 3
+				</button>		
+			</td>
+	</table>
+
+	<div id="message" style="font-size:500%;text-align:center;">
+		Choose a bean 
+	</div>
+	
+	<div style="font-size:500%;text-align:center;">
+		<button 
+			type="button" 
+			onclick="resetFunction()";>
+				Reset
+		</button>	
+	</div>
+	
+	<div id="beanCupNumberWatcher"></div>
+
+	<h6> Last edited on Oct 15, 2018 </h6>
+</body>
+</html>
